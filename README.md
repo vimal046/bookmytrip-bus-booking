@@ -267,7 +267,6 @@ Contributions are welcome! Please follow these steps:
 
 - GitHub: [https://github.com/vimal046](https://github.com/vimal046)
 - LinkedIn: [www.linkedin.com/in/vimal-s-7572b6310](www.linkedin.com/in/vimal-s-7572b6310)
-- Email: your.email@example.com
 
 ---
 
@@ -287,4 +286,3 @@ Contributions are welcome! Please follow these steps:
 Made with ❤️ using Spring Boot
 
 </div>
-```
