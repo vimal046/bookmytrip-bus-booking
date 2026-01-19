@@ -1,4 +1,4 @@
-# 🚌 BookMyTrip - Bus Ticket Booking System
+# BookMyTrip - Bus Ticket Booking System
 
 A full-stack web application for online bus ticket booking built with **Spring Boot** and **MySQL**.
 
@@ -161,19 +161,6 @@ mvn spring-boot:run
 ```
 http://localhost:8080
 ```
-
-### Default Credentials
-
-**Admin Login:**
-
-- Email: `admin@bookmytrip.com`
-- Password: `admin123`
-
-**User Login:**
-
-- Register a new account or use test account
-
----
 
 ## 📸 Screenshots
 
