@@ -269,19 +269,8 @@ Contributions are welcome! Please follow these steps:
 
 ---
 
-## 🙏 Acknowledgments
-
-- Spring Boot Documentation
-- Baeldung Tutorials
-- Stack Overflow Community
-- Bootstrap Team
-
----
-
 <div align="center">
 
 **⭐ Star this repository if you find it helpful!**
-
-Made with ❤️ using Spring Boot
 
 </div>
