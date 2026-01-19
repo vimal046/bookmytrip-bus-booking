@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - BookMyTrip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/user/dashboard"><i class="bi bi-bus-front"></i> BookMyTrip</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/user/bookings">My Bookings</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-link nav-link">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Search Summary -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5>
+                    <i class="bi bi-geo-alt"></i> 
+                    <span th:text="${searchBus.source}"></span> 
+                    → 
+                    <span th:text="${searchBus.destination}"></span>
+                    <span class="badge bg-primary ms-2" th:text="${searchBus.date}"></span>
+                </h5>
+            </div>
+        </div>
+
+        <!-- No Results -->
+        <div th:if="${schedules.isEmpty()}" class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No buses found for the selected route and date.
+            <a href="/user/dashboard" class="alert-link">Try another search</a>
+        </div>
+
+        <!-- Search Results -->
+        <div th:if="${!schedules.isEmpty()}">
+            <h4 class="mb-3">Available Buses (<span th:text="${schedules.size()}"></span>)</h4>
+
+            <div class="row">
+                <div class="col-12" th:each="schedule : ${schedules}">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-3">
+                                    <h5 class="mb-1" th:text="${schedule.bus.busNumber}"></h5>
+                                    <span class="badge bg-info" th:text="${schedule.bus.busType}"></span>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <small class="text-muted">Departure</small>
+                                    <h6 th:text="${schedule.departureTime}"></h6>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <small class="text-muted">Arrival</small>
+                                    <h6 th:text="${schedule.arrivalTime}"></h6>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <small class="text-muted">Available Seats</small>
+                                    <h6>
+                                        <span class="badge bg-success" th:text="${schedule.availableSeats}"></span>
+                                    </h6>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <h5 class="text-primary mb-0">
+                                        ₹<span th:text="${schedule.fare}"></span>
+                                    </h5>
+                                    <small class="text-muted">per seat</small>
+                                </div>
+
+                                <div class="col-md-1 text-end">
+                                    <a th:href="@{/user/book/{id}(id=${schedule.id})}" 
+                                       class="btn btn-primary">
+                                        Book
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <small class="text-muted">
+                                        <i class="bi bi-geo"></i>
+                                        <span th:text="${schedule.bus.route.source}"></span> to 
+                                        <span th:text="${schedule.bus.route.destination}"></span>
+                                        (<span th:text="${schedule.bus.route.distanceKm}"></span> km)
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a href="/user/dashboard" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> New Search
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

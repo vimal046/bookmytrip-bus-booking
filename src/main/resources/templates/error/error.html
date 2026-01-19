@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - BookMyTrip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .error-container {
+            text-align: center;
+            color: white;
+        }
+        .error-icon {
+            font-size: 100px;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-container">
+            <div class="error-icon">
+                <i class="bi bi-emoji-frown"></i>
+            </div>
+            <h1 class="mb-4">Oops! Something went wrong</h1>
+            
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body p-5">
+                            <i class="bi bi-exclamation-circle text-danger" style="font-size: 4rem;"></i>
+                            <h4 class="text-dark mt-3">An error occurred</h4>
+                            
+                            <!-- Display custom error message if available -->
+                            <div th:if="${error}" class="alert alert-danger mt-3">
+                                <i class="bi bi-x-circle"></i>
+                                <span th:text="${error}"></span>
+                            </div>
+                            
+                            <!-- Generic message if no specific error -->
+                            <p class="text-muted" th:unless="${error}">
+                                We're sorry, but something went wrong on our end. 
+                                Please try again or contact support if the problem persists.
+                            </p>
+                            
+                            <div class="alert alert-info mt-3">
+                                <i class="bi bi-lightbulb"></i> 
+                                <strong>Tip:</strong> Try refreshing the page or going back to the previous page.
+                            </div>
+                            
+                            <div class="d-grid gap-2 mt-4">
+                                <a href="/" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-house-door"></i> Go to Home
+                                </a>
+                                <a href="javascript:history.back()" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Go Back
+                                </a>
+                                <button onclick="location.reload()" class="btn btn-outline-info">
+                                    <i class="bi bi-arrow-clockwise"></i> Refresh Page
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

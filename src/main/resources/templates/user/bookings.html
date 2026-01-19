@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Bookings - BookMyTrip</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<div class="container">
+			<a class="navbar-brand" href="/user/dashboard"><i
+				class="bi bi-bus-front"></i> BookMyTrip</a>
+			<div class="navbar-nav ms-auto">
+				<a class="nav-link" href="/user/dashboard">Dashboard</a>
+				<form th:action="@{/logout}" method="post" class="d-inline">
+					<button type="submit" class="btn btn-link nav-link">Logout</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mt-4">
+		<h3 class="mb-4">
+			<i class="bi bi-ticket-perforated"></i> My Bookings
+		</h3>
+
+		<!-- No Bookings -->
+		<div th:if="${bookings.isEmpty()}" class="alert alert-info">
+			<i class="bi bi-info-circle"></i> You don't have any bookings yet. <a
+				href="/user/dashboard" class="alert-link">Search and book now</a>
+		</div>
+
+		<!-- Bookings List -->
+		<div th:if="${!bookings.isEmpty()}">
+			<div class="card mb-3" th:each="booking : ${bookings}">
+				<div class="card-body">
+					<div class="row align-items-center">
+						<div class="col-md-2">
+							<small class="text-muted">Booking Reference</small>
+							<h6 class="mb-0" th:text="${booking.bookingReference}"></h6>
+						</div>
+
+						<div class="col-md-2">
+							<small class="text-muted">Bus</small>
+							<h6 class="mb-0" th:text="${booking.schedule.bus.busNumber}"></h6>
+							<small class="badge bg-info"
+								th:text="${booking.schedule.bus.busType}"></small>
+						</div>
+
+						<div class="col-md-3">
+							<small class="text-muted">Route</small>
+							<p class="mb-0">
+								<i class="bi bi-geo-alt"></i> <span
+									th:text="${booking.schedule.bus.route.source}"></span> → <span
+									th:text="${booking.schedule.bus.route.destination}"></span>
+							</p>
+						</div>
+
+						<div class="col-md-2">
+							<small class="text-muted">Travel Date</small>
+							<p class="mb-0" th:text="${booking.schedule.date}"></p>
+							<small th:text="${booking.schedule.departureTime}"></small>
+						</div>
+
+						<div class="col-md-1">
+							<small class="text-muted">Seats</small>
+							<h6 class="mb-0">
+								<span class="badge bg-secondary"
+									th:text="${booking.seatsBooked}"></span>
+							</h6>
+						</div>
+
+						<div class="col-md-1">
+							<small class="text-muted">Fare</small>
+							<h6 class="text-primary mb-0">
+								₹<span th:text="${booking.totalFare}"></span>
+							</h6>
+						</div>
+
+						<div class="col-md-1 text-end">
+							<span th:if="${booking.status.equals(BookingStatus.CONFIRMED)}"
+								class="badge bg-success">Confirmed</span> <span
+								th:if="${booking.status.equals(BookingStatus.CANCELLED)}"
+								class="badge bg-danger">Cancelled</span> <span
+								th:if="${booking.status.equals(BookingStatus.COMPLETED)}"
+								class="badge bg-secondary">Completed</span>
+						</div>
+					</div>
+
+					<div class="row mt-3">
+						<div class="col-12">
+							<small class="text-muted"> <i class="bi bi-clock"></i>
+								Booked on: <span
+								th:text="${#temporals.format(booking.bookingDate, 'dd-MM-yyyy HH:mm')}"></span>
+							</small>
+
+							<!-- Cancel Button -->
+							<form th:if="${booking.status.equals(BookingStatus.CONFIRMED)}"
+								th:action="@{/user/cancel/{id}(id=${booking.id})}" method="post"
+								class="d-inline float-end"
+								onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+								<button type="submit" class="btn btn-sm btn-outline-danger">
+									<i class="bi bi-x-circle"></i> Cancel Booking
+								</button>
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-4">
+			<a href="/user/dashboard" class="btn btn-outline-primary"> <i
+				class="bi bi-arrow-left"></i> Back to Dashboard
+			</a>
+		</div>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
